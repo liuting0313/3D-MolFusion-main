@@ -1,0 +1,60 @@
+--extra-index-url https://download.pytorch.org/whl/cu118
+--find-links https://data.pyg.org/whl/torch-2.4.0+cu118.html
+
+
+# ======================================================================
+# 3D-MolFusion 
+# ======================================================================
+#   OS: Ubuntu 20.04.1 LTS (Linux 5.15.0-127-generic, x86_64)
+#   Python: 3.8 (conda-forge, cpython)
+#   GPU: NVIDIA RTX A6000, Driver 570.86.15
+#   torch.version.cuda: 11.8, cudnn: 90100, nvcc: 11.8.89
+#   torch.cuda_available: True
+#
+# Install (clean env, Python 3.8):
+#   pip install -r requirements.txt
+#   # PyG + CUDA 11.8 must match torch 2.4.1, e.g.:
+#   pip install torch-scatter==2.1.2+pt24cu118 torch-sparse==0.6.18+pt24cu118 \
+#     torch-cluster==1.6.3+pt24cu118 torch-spline-conv==1.2.2+pt24cu118 \
+#     -f https://data.pyg.org/whl/torch-2.4.0+cu118.html
+#
+# ======================================================================
+
+# ---- core scientific stack ----
+numpy==1.24.4
+pandas==1.5.3
+scipy==1.10.1
+scikit-learn==1.3.2
+PyYAML==6.0.2
+tqdm==4.67.1
+joblib==1.4.2
+threadpoolctl==3.5.0
+Pillow==10.4.0
+matplotlib==3.7.3
+seaborn==0.13.2
+networkx==2.8.8
+psutil==7.0.0
+
+# ---- PyTorch (CUDA 11.8 build) ----
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
+
+# ---- PyTorch Geometric (must match torch+cu118) ----
+torch-geometric==2.6.1
+torch-scatter==2.1.2+pt24cu118
+torch-sparse==0.6.18+pt24cu118
+torch-cluster==1.6.3+pt24cu118
+torch-spline-conv==1.2.2+pt24cu118
+
+# ---- chemistry / conformer ----
+rdkit-pypi==2022.9.5
+deepchem==2.6.1
+openbabel-wheel==3.1.1.22
+PubChemPy==1.0.4
+e3nn==0.5.7
+schnetpack==2.0.4
+
+# ---- logging / visualization actually used ----
+tensorboardX==2.6.2.2
+py3Dmol==2.5.2
