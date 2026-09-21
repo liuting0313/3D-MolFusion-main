@@ -1,0 +1,108 @@
+experiment_name: "multiview_3dmol_esol"
+
+data:
+  name: "ESOL"
+  data_dir: "./dataset"
+  batch_size: 24
+  num_workers: 4
+  split_type: "scaffold"
+  enable_3d_conformers: true
+
+model:
+  model_type: "multiview_3dmol"
+  hidden_dim: 96
+  num_heads: 4
+  dropout: 0.4
+  num_tasks: 1
+  task_type: "regression"
+
+  predictor:
+    task_type: "regression"
+    num_tasks: 1
+
+  node_dim: 9
+  edge_dim: 3
+  descriptor_dim: 30
+  fingerprint_dim: 3096
+
+  use_3d_visual: true
+  use_2d_graph: true
+  use_fingerprints: true
+
+  multiview_renderer:
+    image_size: 128
+    background_color: [255, 255, 255]
+    atom_scale: 0.3
+    bond_width: 2
+    padding: 0.15
+
+  direction_aware_encoder:
+    hidden_channels: [12, 24, 48, 96]
+    dropout: 0.35
+
+  gps:
+    hidden_dim: 96
+    num_local_layers: 3
+    num_global_layers: 2
+    num_heads: 4
+    dropout: 0.35
+    ffn_mult: 2
+    use_mol_pe: true
+    num_rbf: 24
+    pe_cutoff: 10.0
+    use_angle_encoding: true
+    use_direction_encoding: true
+    num_angle_basis: 8
+
+  fingerprint_encoder:
+    input_dim: 3096
+    hidden_dim: 192
+    num_layers: 3
+    dropout_rate: 0.4
+    activation: "gelu"
+    patch_size: 24
+
+  cross_modal_attention:
+    num_heads: 4
+    dropout: 0.30
+    use_adaptive_gating: true
+    use_cross_attention: true
+
+training:
+  seed: 42
+  epochs: 350
+  device: "cuda"
+  mixed_precision: true
+  max_grad_norm: 1.0
+
+  loss_function: "MSELoss"
+
+  optimizer:
+    name: "AdamW"
+    lr: 0.0002
+    weight_decay: 0.1
+    betas: [0.9, 0.999]
+    eps: 1.0e-8
+
+  scheduler:
+    enabled: true
+    name: "cosineannealinglr"
+    T_max: 350
+    eta_min: 0.000002
+
+  early_stopping:
+    patience: 30
+    mode: "min"
+    monitor: "val_rmse"
+    min_delta: 0.0008
+
+
+saving:
+  metric_for_best: "val_rmse"
+  save_every: 0
+
+logging:
+  wandb: false
+
+deterministic: true
+benchmark: false
