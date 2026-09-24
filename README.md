@@ -130,8 +130,8 @@ python scripts/test.py \
 
 Reported metrics are:
 
-- Classification: ROC-AUC, accuracy and F1 score
-- Regression: RMSE and MAE on the original target scale
+- Classification: ROC-AUC
+- Regression: RMSE
 
 ## Reproducibility
 
